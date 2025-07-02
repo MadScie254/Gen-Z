@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice of the Youth | #SabaSabaIsHere</title>
+    
+    <!-- Meta Tags for SEO and Social Sharing (OpenGraph) -->
+    <meta name="description" content="A generation's testament. A nation's awakening. This is the digital frontline for the Kenyan revolution.">
+    <meta property="og:title" content="Voice of the Youth | #SabaSabaIsHere">
+    <meta property="og:description" content="We are the architects of the future they tried to steal.">
+    <meta property="og:image" content="https://placehold.co/1200x630/FF0000/FFFFFF?text=A+NEW+DAWN">
+    <meta property="og:url" content="#">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP (GreenSock Animation Platform) for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Roboto+Mono:wght@400;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Variables for Theming */
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #000000;
+            --bg-card: #111111;
+            --text-primary: #E0E0E0;
+            --text-secondary: #a0a0a0;
+            --border-color: #333333;
+            --glitch-bg: #0A0A0A;
+            --noise-stroke: #222;
+        }
+
+        body.light-theme {
+            --bg-primary: #F5F5F5;
+            --bg-secondary: #FFFFFF;
+            --bg-card: #FFFFFF;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --border-color: #DDDDDD;
+            --glitch-bg: #F5F5F5;
+            --noise-stroke: #DDD;
+        }
+
+        /* Base Styles using Variables */
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        .font-display {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .font-serif-italic {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        .brutal-red { color: #FF0000; }
+        .hope-yellow { color: #FFC700; }
+        .grief-blue { color: #60A5FA; }
+
+        /* Background with subtle noise pattern */
+        .bg-dark-noise {
+            background-color: var(--bg-primary);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='var(--noise-stroke)' stroke-width='1'%3E%3Cpath d='M0 0h800v800H0z'/%3E%3Cpath d='M-100 100h1000v100H-100zM-100 300h1000v100H-100zM-100 500h1000v100H-100zM-100 700h1000v100H-100z'/%3E%3Cpath d='M100-100v1000h100V-100zM300-100v1000h100V-100zM500-100v1000h100V-100zM700-100v1000h100V-100z'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 200px;
+        }
+
+        /* Glitch effect for titles */
+        .glitch-text::before, .glitch-text::after {
+            background: var(--glitch-bg);
+        }
+        
+        /* Other styles from previous version */
+        .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1), transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
+        .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+        .glitch-text { position: relative; }
+        .glitch-text::before, .glitch-text::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; clip: rect(0, 900px, 0, 0); }
+        .glitch-text::before { left: 2px; text-shadow: -2px 0 #FF0000; animation: glitch-anim-1 2s infinite linear alternate-reverse; }
+        .glitch-text::after { left: -2px; text-shadow: -2px 0 #60A5FA; animation: glitch-anim-2 2s infinite linear alternate-reverse; }
+        @keyframes glitch-anim-1 { 0% { clip: rect(42px, 9999px, 44px, 0); } 100% { clip: rect(92px, 9999px, 98px, 0); } }
+        @keyframes glitch-anim-2 { 0% { clip: rect(65px, 9999px, 119px, 0); } 100% { clip: rect(20px, 9999px, 130px, 0); } }
+        .wall-card { background: var(--bg-card); border: 1px solid var(--border-color); transition: transform 0.3s, box-shadow 0.3s, background-color 0.5s; }
+        .wall-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2); }
+        .wall-card img { filter: grayscale(100%); transition: filter 0.3s; }
+        .wall-card:hover img { filter: grayscale(0%); }
+        #theme-toggle-button { transition: color 0.3s, transform 0.3s; }
+        #theme-toggle-button:hover { transform: scale(1.1) rotate(15deg); }
+    </style>
+</head>
+<body class="antialiased bg-dark-noise">
+
+    <!-- 1. Header & Navigation -->
+    <header id="header" class="bg-black/70 dark:bg-black/70 bg-white/70 backdrop-blur-lg fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="#" class="font-display text-xl brutal-red">✊ V.O.Y</a>
+                <nav class="hidden md:flex items-baseline space-x-6">
+                    <a href="#countdown" class="text-secondary hover:text-primary transition-colors duration-300">Saba Saba</a>
+                    <a href="#manifesto" class="text-secondary hover:text-primary transition-colors duration-300">Manifesto</a>
+                    <a href="#demands" class="text-secondary hover:text-primary transition-colors duration-300">Our Covenant</a>
+                    <a href="#disappeared" class="text-secondary hover:text-primary transition-colors duration-300">The Unforgotten</a>
+                </nav>
+                <div class="flex items-center">
+                    <button id="theme-toggle-button" class="text-secondary hover:text-primary p-2 rounded-full focus:outline-none">
+                        <i id="theme-icon" class="fas fa-moon fa-lg"></i>
+                    </button>
+                    <button id="mobile-menu-button" class="md:hidden ml-2 inline-flex items-center justify-center p-2 rounded-md text-secondary hover:text-primary focus:outline-none">
+                        <i class="fas fa-bars fa-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-secondary/95">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#countdown" class="text-secondary hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Saba Saba</a>
+                <a href="#manifesto" class="text-secondary hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Manifesto</a>
+                <a href="#demands" class="text-secondary hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Our Covenant</a>
+                <a href="#disappeared" class="text-secondary hover:text-primary block px-3 py-2 rounded-md text-base font-medium">The Unforgotten</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 2. Hero Section -->
+        <section id="hero" class="h-screen flex items-center justify-center bg-cover bg-center bg-fixed" style="background-image: linear-gradient(to top, var(--bg-primary) 0%, transparent 50%, var(--bg-primary) 100%), url('https://placehold.co/1920x1080/000000/718096?text=WE+ARE+THE+PEOPLE');">
+            <div class="text-center px-4">
+                <h1 class="font-display text-4xl sm:text-6xl lg:text-8xl text-primary leading-tight">
+                    THEY BURIED US.
+                    <br>
+                    <span class="brutal-red">THEY DIDN'T KNOW WE WERE SEEDS.</span>
+                </h1>
+                <p class="mt-6 text-lg text-secondary max-w-2xl mx-auto font-serif-italic">
+                    "A society grows great when old men plant trees whose shade they know they shall never sit in."
+                </p>
+                <div class="mt-10">
+                    <a href="#countdown" class="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-lg shadow-red-500/20">
+                        WITNESS THE REBIRTH
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Countdown to Saba Saba -->
+        <section id="countdown" class="py-20 sm:py-24 bg-secondary fade-in-up">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="font-display text-4xl sm:text-5xl hope-yellow">A Prophecy Foretold in Hashtags.</h2>
+                <p class="mt-4 text-secondary max-w-2xl mx-auto">On the seventh day of the seventh month, a generation scorned will rewrite its destiny on the streets. Saba Saba is not a date; it is a promise we made to our future.</p>
+                <div id="countdown-timer" class="mt-12 flex justify-center items-center space-x-4 sm:space-x-8 text-primary">
+                    <div class="text-center bg-primary p-4 rounded-lg w-24">
+                        <span id="days" class="font-display text-4xl sm:text-6xl">00</span>
+                        <span class="font-mono text-sm text-secondary">Days</span>
+                    </div>
+                    <div class="text-center bg-primary p-4 rounded-lg w-24">
+                        <span id="hours" class="font-display text-4xl sm:text-6xl">00</span>
+                        <span class="font-mono text-sm text-secondary">Hours</span>
+                    </div>
+                    <div class="text-center bg-primary p-4 rounded-lg w-24">
+                        <span id="minutes" class="font-display text-4xl sm:text-6xl">00</span>
+                        <span class="font-mono text-sm text-secondary">Minutes</span>
+                    </div>
+                    <div class="text-center bg-primary p-4 rounded-lg w-24">
+                        <span id="seconds" class="font-display text-4xl sm:text-6xl brutal-red">00</span>
+                        <span class="font-mono text-sm text-secondary">Seconds</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Manifesto -->
+        <section id="manifesto" class="py-20 sm:py-32 bg-primary fade-in-up">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+                <div class="text-center mb-12">
+                    <h2 class="font-display text-4xl sm:text-5xl brutal-red">The Manifesto of the Unsilenced</h2>
+                    <p class="mt-4 text-secondary font-serif-italic">This is not a plea. It is a declaration.</p>
+                </div>
+                <div class="space-y-12 text-lg leading-relaxed text-primary">
+                    <p>We, the progeny of forgotten promises and the architects of a dawn they tried to abort, declare our sovereignty. We are the generation that inherited a nation of boundless potential, only to find it mortgaged by the avarice of a few. They fed us digital dreams and left us with analog despair. They taught us to fly and then sold the sky.</p>
+                    <p>Our eyes have been scoured by the teargas of truth. We have seen the anatomy of corruption laid bare in our empty pockets and the hollow promises of our leaders. We have watched our taxes, the sweat of our collective brow, transmute into luxury vehicles and offshore accounts, leaving us with a healthcare system that is a prayer and an education system that is a debt. We have memorized the sound of gunfire aimed at those who only asked for their daily bread. This knowledge is a fire in our bones.</p>
+                    <p>We hereby reject the amnesia they prescribe. We refuse to unsee the gluttony, the impunity, the sheer, breathtaking contempt for the people. We are the nation's memory, and our memory is long. The revolution will not be a fleeting headline; it will be the new curriculum. This is not an uprising. This is an exorcism of the demons of greed and a reclamation of our national soul.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. What’s Broken (Enhanced with "Real-time" stats) -->
+        <section id="broken" class="py-20 sm:py-32 bg-dark-noise fade-in-up">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="font-display text-4xl sm:text-5xl glitch-text" data-text="SYMPHONY OF A FAILED STATE">SYMPHONY OF A FAILED STATE</h2>
+                    <p class="mt-4 text-secondary">The devastating metrics of a kleptocracy.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto text-center">
+                    <div class="bg-card p-8 rounded-lg border border-border-color">
+                        <h3 class="font-mono text-lg grief-blue">YOUTH POTENTIAL WASTED</h3>
+                        <p class="font-display text-6xl mt-2"><span id="unemployment-stat">67</span>%</p>
+                        <p class="text-secondary mt-2">A generation's talent, left to atrophy.</p>
+                    </div>
+                    <div class="bg-card p-8 rounded-lg border border-border-color">
+                        <h3 class="font-mono text-lg hope-yellow">NATIONAL DIGNITY ERODED</h3>
+                        <p class="font-display text-6xl mt-2"><span id="poverty-stat">38</span>%</p>
+                        <p class="text-secondary mt-2">Forced to survive, never to thrive.</p>
+                    </div>
+                    <div class="bg-card p-8 rounded-lg border border-border-color">
+                        <h3 class="font-mono text-lg brutal-red">TRUST DEFICIT</h3>
+                        <p class="font-display text-6xl mt-2">#<span id="corruption-stat">126</span></p>
+                        <p class="text-secondary mt-2">A government that preys on its own.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Timeline / Flashback (Enhanced with Horizontal Scroll) -->
+        <section id="timeline-section" class="py-20 sm:py-32 bg-secondary overflow-hidden">
+            <div class="container mx-auto px-4 mb-16 text-center">
+                 <h2 class="font-display text-4xl sm:text-5xl">THE ANATOMY OF AN AWAKENING</h2>
+                 <p class="mt-4 text-secondary">A chronology of betrayal and the birth of defiance.</p>
+            </div>
+            <div id="timeline-container" class="w-full flex pb-8">
+                <div class="timeline-item flex-shrink-0 w-80 md:w-96 mx-4 p-6 bg-primary rounded-lg border border-border-color">
+                    <p class="font-mono text-sm hope-yellow">JUNE 18, 2024</p>
+                    <h3 class="font-bold text-xl mt-2">The Insult</h3>
+                    <p class="text-secondary mt-2">The Finance Bill 2024 is tabled—a fiscal declaration of war against the future itself. The digital whisper of #RejectFinanceBill2024 begins.</p>
+                </div>
+                <div class="timeline-item flex-shrink-0 w-80 md:w-96 mx-4 p-6 bg-primary rounded-lg border border-border-color">
+                    <p class="font-mono text-sm hope-yellow">JUNE 20, 2024</p>
+                    <h3 class="font-bold text-xl mt-2">The Response</h3>
+                    <p class="text-secondary mt-2">Gen-Z's organized peace is met with the state's chaotic violence. The first taste of teargas clarifies the struggle.</p>
+                </div>
+                <div class="timeline-item flex-shrink-0 w-80 md:w-96 mx-4 p-6 bg-primary rounded-lg border border-border-color">
+                    <p class="font-mono text-sm brutal-red">JUNE 25, 2024</p>
+                    <h3 class="font-bold text-xl mt-2">The Rupture</h3>
+                    <p class="text-secondary mt-2">The illusion of democracy shatters against the walls of Parliament. Rex Masai becomes a name etched in blood and memory.</p>
+                </div>
+                <div class="timeline-item flex-shrink-0 w-80 md:w-96 mx-4 p-6 bg-primary rounded-lg border border-border-color">
+                    <p class="font-mono text-sm brutal-red">JUNE 27, 2024</p>
+                    <h3 class="font-bold text-xl mt-2">The Martyrdom</h3>
+                    <p class="text-secondary mt-2">The stolen life of Dr. Austin "Kajwang" Omondi becomes a testament to the state's depravity. Rage finds its focus. Grief becomes fuel.</p>
+                </div>
+                <div class="timeline-item flex-shrink-0 w-80 md:w-96 mx-4 p-6 bg-primary rounded-lg border border-border-color">
+                    <p class="font-mono text-sm hope-yellow">JULY 7, 2025</p>
+                    <h3 class="font-bold text-xl mt-2">The Reckoning</h3>
+                    <p class="text-secondary mt-2">Saba Saba. The day the seeds, long buried, finally break through the concrete of oppression. The future begins now.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Wall of the Disappeared -->
+        <section id="disappeared" class="py-20 sm:py-32 bg-dark-noise fade-in-up">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="font-display text-4xl sm:text-5xl grief-blue">THE UNFORGOTTEN</h2>
+                <p class="mt-4 text-secondary max-w-3xl mx-auto">They were stolen from us in the quiet hours, their courage a threat to a fragile regime. Their silence screams louder than any slogan. We are their voice now. We will not allow their names to become whispers. <span class="brutal-red">#WhereAreThey</span></p>
+                <div class="mt-16 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+                    <!-- Cards remain the same -->
+                    <div class="wall-card p-4 rounded-lg"> <img src="https://placehold.co/200x200/333/ccc?text=?" alt="Abducted Person" class="w-full h-auto rounded-full mx-auto border-2 border-gray-600"> <h3 class="font-bold mt-4">Billy "Cobra" Omondi</h3> <p class="text-sm text-secondary">Abducted: June 26</p> </div>
+                    <div class="wall-card p-4 rounded-lg"> <img src="https://placehold.co/200x200/333/ccc?text=?" alt="Abducted Person" class="w-full h-auto rounded-full mx-auto border-2 border-gray-600"> <h3 class="font-bold mt-4">Shad Khalif</h3> <p class="text-sm text-secondary">Abducted: June 23</p> </div>
+                    <div class="wall-card p-4 rounded-lg"> <img src="https://placehold.co/200x200/333/ccc?text=?" alt="Abducted Person" class="w-full h-auto rounded-full mx-auto border-2 border-gray-600"> <h3 class="font-bold mt-4">Kevin Monari</h3> <p class="text-sm text-secondary">Abducted: June 26</p> </div>
+                    <div class="wall-card p-4 rounded-lg"> <img src="https://placehold.co/200x200/333/ccc?text=?" alt="Abducted Person" class="w-full h-auto rounded-full mx-auto border-2 border-gray-600"> <h3 class="font-bold mt-4">And countless others</h3> <p class="text-sm text-secondary">Their names are known.</p> </div>
+                    <div class="wall-card p-4 rounded-lg flex items-center justify-center flex-col"> <div class="w-full h-full rounded-full bg-red-900/50 flex items-center justify-center text-4xl font-display border-2 border-red-500 text-red-500">?</div> <h3 class="font-bold mt-4">A Missing Voice?</h3> <p class="text-sm text-secondary">Report an abduction.</p> </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Our Demands -->
+        <section id="demands" class="py-20 sm:py-32 bg-secondary fade-in-up">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <div class="text-center mb-12">
+                    <h2 class="font-display text-4xl sm:text-5xl brutal-red">OUR COVENANT WITH THE FUTURE</h2>
+                    <p class="mt-4 text-secondary font-serif-italic">These are not demands. They are the foundational pillars of the Kenya we will build.</p>
+                </div>
+                <ol class="list-decimal list-inside space-y-8 text-xl sm:text-2xl font-bold text-primary text-left mx-auto max-w-3xl">
+                    <li><span class="bg-red-600 text-white dark:text-black px-2">THE BILL IS DEAD.</span> The Finance Bill 2024, and any monstrous reincarnation of it, is to be publicly and permanently nullified.</li>
+                    <li><span class="bg-red-600 text-white dark:text-black px-2">A VACANT THRONE.</span> The complete and immediate dissolution of the current presidency and cabinet. Their mandate is revoked by the people.</li>
+                    <li><span class="bg-red-600 text-white dark:text-black px-2">A DEBT OF BLOOD.</span> An international, independent tribunal to prosecute every individual responsible for the murder, injury, and abduction of protesters.</li>
+                    <li><span class="bg-red-600 text-white dark:text-black px-2">THE PEOPLE'S CHARTER.</span> A constitutional convention, led by a council of citizens, to draft a new social contract that enshrines the supremacy of the people over politicians.</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <!-- 11. Footer -->
+    <footer class="bg-secondary py-12 border-t border-border-color">
+        <div class="container mx-auto px-4 text-center text-secondary">
+            <p class="font-bold text-lg text-primary">The Revolution Will Be Beautiful, and Terrible.</p>
+            <div class="flex justify-center space-x-6 my-6">
+                <a href="#" class="hover:text-primary transition-colors duration-300"><i class="fab fa-telegram fa-2x"></i></a>
+                <a href="#" class="hover:text-primary transition-colors duration-300"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="#" class="hover:text-primary transition-colors duration-300"><i class="fab fa-tiktok fa-2x"></i></a>
+            </div>
+            <p class="font-mono text-sm">&copy; 2025 The Unsilenced Generation.</p>
+            <p class="mt-4 text-lg brutal-red font-display">#SabaSabaIsHere #KenyaIsAwake</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- Theme Toggle ---
+            const themeToggleButton = document.getElementById('theme-toggle-button');
+            const themeIcon = document.getElementById('theme-icon');
+            const body = document.body;
+
+            const applyTheme = (theme) => {
+                if (theme === 'light') {
+                    body.classList.add('light-theme');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    body.classList.remove('light-theme');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            };
+
+            themeToggleButton.addEventListener('click', () => {
+                const newTheme = body.classList.contains('light-theme') ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+
+            // Apply saved theme on load
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            applyTheme(savedTheme);
+
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+
+            // --- Intersection Observer for simple fade-in animations ---
+            const sections = document.querySelectorAll('.fade-in-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => observer.observe(section));
+
+            // --- Countdown Timer for Saba Saba ---
+            const countdownDate = new Date("July 7, 2025 08:00:00").getTime();
+            const timer = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countdownDate - now;
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById('countdown-timer').innerHTML = "<h3 class='font-display text-4xl brutal-red'>THE RECKONING IS NOW.</h3>";
+                    return;
+                }
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').innerText = String(days).padStart(2, '0');
+                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+
+            }, 1000);
+            
+            // --- GSAP Animated Counters ---
+            function animateStat(targetId, endValue, duration = 2.5) {
+                 gsap.from(targetId, {
+                    innerText: 0,
+                    duration: duration,
+                    snap: { innerText: 1 },
+                    scrollTrigger: {
+                        trigger: targetId,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            }
+            animateStat("#unemployment-stat", 67);
+            animateStat("#poverty-stat", 38);
+            animateStat("#corruption-stat", 126);
+
+            // --- GSAP Horizontal Scroll for Timeline ---
+            const timeline = document.querySelector("#timeline-container");
+            if (timeline) {
+                gsap.to(timeline, {
+                    x: () => -(timeline.scrollWidth - document.documentElement.clientWidth) + "px",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "#timeline-section",
+                        pin: true,
+                        scrub: 1,
+                        end: () => "+=" + (timeline.scrollWidth - document.documentElement.clientWidth),
+                        invalidateOnRefresh: true
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
